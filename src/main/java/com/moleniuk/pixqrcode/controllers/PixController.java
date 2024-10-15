@@ -1,7 +1,7 @@
 package com.moleniuk.pixqrcode.controllers;
 
 import com.google.zxing.WriterException;
-import com.moleniuk.pixqrcode.data.entities.PixEntities;
+import com.moleniuk.pixqrcode.data.dto.PixDTOResponse;
 import com.moleniuk.pixqrcode.services.PixService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +23,15 @@ public class PixController {
     private final PixService pixService;
 
     @PostMapping("/gerar")
-    public ResponseEntity<PixEntities> generatePix(@RequestParam String chavePix,
-                                                   @RequestParam String nomeBeneficiario,
-                                                   @RequestParam String cidadeBeneficiario,
-                                                   @RequestParam(required = false) String descricaoPagamento,
-                                                   @RequestParam(required = false) Double valor,
-                                                   @RequestParam(required = false) MultipartFile logo
+    public ResponseEntity<PixDTOResponse> generatePix(@RequestParam String chavePix,
+                                                      @RequestParam String nomeBeneficiario,
+                                                      @RequestParam String cidadeBeneficiario,
+                                                      @RequestParam(required = false) String descricaoPagamento,
+                                                      @RequestParam(required = false) Double valor,
+                                                      @RequestParam(required = false) MultipartFile logo
     ) throws IOException, WriterException {
-
         BufferedImage logoImage = (logo != null && !logo.isEmpty()) ? ImageIO.read(logo.getInputStream()) : null;
-        PixEntities pixPayment = pixService.generatePixPayment(
+        PixDTOResponse pixPayment = pixService.generatePixPayment(
                 chavePix,
                 nomeBeneficiario,
                 cidadeBeneficiario,

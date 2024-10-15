@@ -42,7 +42,7 @@ public record PixDTO(String nomeDestinatario, String chaveDestinatario, BigDecim
             throw new IllegalArgumentException(msg);
         }
 
-        if (valor.compareTo(BigDecimal.ZERO) <= 0)
+        if (valor.compareTo(BigDecimal.ZERO) < 0)
             throw new IllegalArgumentException("O valor do PIX deve ser maior que zero.");
 
         final var valorStr = formatNumber(valor);
